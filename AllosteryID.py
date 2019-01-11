@@ -24,28 +24,28 @@ pdbl = PDBList()
 #Ask for query protien
 protein=input("Please enter query protein: ")
 query=protein
-proteinName=cwd+'/Original_'+query+'/pdb'+protein+'.ent'
+proteinName=cwd+'/data/Original_'+query+'/pdb'+protein+'.ent'
 
 #Make directory for Alignment files
-if not os.path.exists(cwd+'/Alignment_'+protein+'/'):
-    os.makedirs(cwd+'/Alignment_'+protein+'/')
+if not os.path.exists(cwd+'/data/Alignment_'+protein+'/'):
+    os.makedirs(cwd+'/data/Alignment_'+protein+'/')
 #Make directory for moved pdb files
-if not os.path.exists(cwd+'/Moved_'+query+'/'):
-    os.makedirs(cwd+'/Moved_'+query+'/')
+if not os.path.exists(cwd+'/data/Moved_'+query+'/'):
+    os.makedirs(cwd+'/data/Moved_'+query+'/')
 #Make directory for original pdb files
-if not os.path.exists(cwd+'/Original_'+query+'/'):
-    os.makedirs(cwd+'/Original_'+query+'/')
+if not os.path.exists(cwd+'/data/Original_'+query+'/'):
+    os.makedirs(cwd+'/data/Original_'+query+'/')
 #Make Directory for Chains
-if not os.path.exists(cwd+'/Chains_'+query+'/'):
-    os.makedirs(cwd+'/Chains_'+query+'/')
+if not os.path.exists(cwd+'/data/Chains_'+query+'/'):
+    os.makedirs(cwd+'/data/Chains_'+query+'/')
 #Make Directory for Ligands
-if not os.path.exists(cwd+'/Ligands_'+query+'/'):
-    os.makedirs(cwd+'/Ligands_'+query+'/')
+if not os.path.exists(cwd+'/data/Ligands_'+query+'/'):
+    os.makedirs(cwd+'/data/Ligands_'+query+'/')
 #Create parser object
 parser = PDBParser()
 
 #Obtain query protein ID
-fir=cwd+'/Original_'+query+'/'
+fir=cwd+'/data/Original_'+query+'/'
 pdbl.retrieve_pdb_file(protein, file_format='pdb', pdir=fir)
 
 #Download structure of query protein
@@ -82,7 +82,7 @@ for match in myList:
         #Name of ith protein on list
         compare_protein = match[0]
         #Get the structure of the ith protein on the list
-        moving = cwd+'/Original_'+query+'/pdb'+compare_protein.lower()+".ent"
+        moving = cwd+'/data/Original_'+query+'/pdb'+compare_protein.lower()+".ent"
         #Get all ligands from molecule
         ligand_selection = get_ligand_as_strucutre(moving)
         print(moving)
@@ -93,7 +93,7 @@ for match in myList:
         #Save each chain and align with the query protein
         for chain in chain_mol:
             name = compare_protein.lower()+str(i)
-            save_name = cwd+'/Chains_'+query+'/pdb'+name+'.pdb'
+            save_name = cwd+'/data/Chains_'+query+'/pdb'+name+'.pdb'
             chain.save_pdb(save_name)
             #Align each chain with template
             align_proteins(template, name, query)
@@ -102,7 +102,7 @@ for match in myList:
 #For every moved chain, get all of the ligands and 
 #place them in individual PDB files
 #Uses get_ligand methods in GetLigands.py
-for filename in glob.glob(cwd+'/Moved_'+query+'/'+"*1.pdb"):
-    filename2 = filename.lstrip(cwd+'/Moved_'+query+'/')
-    outputfilename = cwd+'/Ligands_'+query+'/'
+for filename in glob.glob(cwd+'/data/Moved_'+query+'/'+"*1.pdb"):
+    filename2 = filename.lstrip(cwd+'/data/Moved_'+query+'/')
+    outputfilename = cwd+'/data/Ligands_'+query+'/'
     get_ligand(filename, outputfilename+'ligand_'+filename2, proteinName)   

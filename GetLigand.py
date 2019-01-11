@@ -184,11 +184,11 @@ to the query protein and saves the to teh directory moved
 """
 def align_proteins(template, moving, query):
 	cwd = os.getcwd()
-	fastaFileName = cwd+'/Alignment_'+query+'/pdb'+moving+'.fasta'
-	PDB_File_Name = cwd+'/Moved_'+query+'/pdb'+'moved'+moving+'.pdb'
-	alnFileName = cwd+'/Alignment_'+query+'/pdb'+moving+'.aln'
+	fastaFileName = cwd+'/data/Alignment_'+query+'/pdb'+moving+'.fasta'
+	PDB_File_Name = cwd+'/data/Moved_'+query+'/pdb'+'moved'+moving+'.pdb'
+	alnFileName = cwd+'/data/Alignment_'+query+'/pdb'+moving+'.aln'
 	# Load in the moving PDB
-	moving = PDBParser().get_structure(moving, cwd+'/Chains_'+query+'/pdb'+moving.lower()+".pdb")
+	moving = PDBParser().get_structure(moving, cwd+'/data/Chains_'+query+'/pdb'+moving.lower()+".pdb")
 	
 	seq1 = get_seq(template)
 	seq2 = get_seq(moving)
@@ -208,7 +208,7 @@ def align_proteins(template, moving, query):
 	# Use clustal to align the two sequences
 	#info_path = os.path.dirname(os.path.abspath(__file__))
 	#clustalw2_exe =  info_path + "/clustalw-2.1-linux-x86_64-libcppstatic/clustalw2"
-	clustalw2_exe = r"C:\Program Files (x86)\ClustalW2\clustalw2.exe"
+	clustalw2_exe = r"/usr/bin/clustalw"
 	clustalw_cline = ClustalwCommandline(clustalw2_exe, infile=fastaFileName)
 	stdout, stderr = clustalw_cline()
 	
